@@ -313,7 +313,7 @@ function useState(initial){
 
   const actions = oldHook ? oldHook.queue : []
   actions.forEach(action => {
-    hook.state = action(hook.state)
+    hook.state = action instanceof Function ? action(hook.state) : action
   })
 
   const setState = action => {
@@ -344,24 +344,63 @@ const byor = {
 
 const container = document.getElementById("root");
 
-
-function Counter() {
-  const [state, setState] = byor.useState(1)
+function InputComponent(){
   const [ipState, ipSetState] = byor.useState('there')
+  return(
+    <div>
+      <p>A input component with local state</p>
+      <label>Type and hit enter</label>
+      <input style="margin:1rem 1rem 0 .5rem;" value={ipState} onChange={(e)=>ipSetState(e.target.value)} />
+      <h2>Hello {ipState} !!</h2>
+    </div>
+  )
+}
+function Counter(){
+  const [state, setState] = byor.useState(1)
   return (
-    <div style="background: lightgreen">
-      <h1>Multiple state values</h1>
-      <h1 onClick={() => setState(c => c + 1)}>
-      Count: {state}
-      </h1>
-      <label>Type your name : </label>
-      <input value={ipState} onChange={(e)=>{ipSetState(()=>e.target.value)}} />
-      <h1>Hello {ipState} !!</h1>
+    <div style="user-select: none; cursor:pointer;">
+      Click below to increment count
+      <h3 onClick={() => setState(state+1)}>
+        Count: {state}
+      </h3>
+      <button onClick={()=>setState(0)}>Reset</button>
+    </div>
+
+  )
+}
+function App() {
+  
+  
+  return (
+    <div style="background: lightgreen; padding: 1rem;">
+      <h1>Welcome !!</h1>
+      <p>An attempt to understand how react works under the hood by breakdown to its basic functionalities and putting them back.</p>
+      <hr />
+      <h2>We have two functional components with a re-implementation of useState functionality for state management</h2>
+      {Counter()}
+      <hr />
+      {InputComponent()}
+      <hr />
+      <p>Few things implemented to make this work</p>
+      <ul>
+        <li>Make babel transpile JSX using the custom function</li>
+        <li>Render func : Create the DOM node using the element type</li>
+        <li>Concurrent work: to prevent render blocking of a tree with large height</li>
+        <li>Fiber: Unit of Work</li>
+        <li>Render and commit phases - to prevent stuttering of UI on updates</li>
+        <li>Reconcilation</li>
+        <li>Functional components</li>
+        <li>Native implementation of useState</li>
+      </ul>
+      <p>Few things react does better</p>
+      <p>React's <a style="text-decoration: none;" href="https://github.com/facebook/react/tree/main/packages/scheduler">custom scheduler</a> to maintain split render into small chunks</p>
+      <p>React skips entire subtrees when nothing is changed and uses old fiber tree in such cases skipping rendering part. There can be cases where there are multiple updates before a single commit. React gives priority to each update and decide which to commit.</p>
+      <a style="text-decoration: none;" href="https://github.com/ukarthik27/byor">Github</a>      
     </div>
     
   )
 }
-const element = <Counter />
+const element = <App />
 byor.render(element, container);
 
 

@@ -1,7 +1,7 @@
 ## Build your own react
 
 An attempt to understand how react works under the hood by breakdown to its basic functionalities and putting them back.
-
+Codesandbox: https://fexy87.csb.app/
 ---
 Main file in `byor>src>index.js`
 
@@ -89,12 +89,9 @@ Hence, Children from functional components obtained by calling them instead of a
 
 #### useState
 Emulate state management by implementing one of the fundamental hooks `useState`. 
-We maintain a hooks array and current hook index. To keep it simple, our setstate only accepts functions. In code it is actions. Old state will be passed to this function, which return the new state.
-TODO: Add functionality to accepts just values to useState 
+We maintain a hooks array and current hook index. To keep it simple, our setstate accepts functions and values. In code it is actions. Old state will be passed to this function, which return the new state. 
 
 ----
-
-React skips entire subtrees when nothing is changed and uses old fiber tree in such cases skipping rendering part.
-There can be cases where there are multiple updates before a single commit. React gives priority to each update and decide which to commit.
+Few things react does better.React skips entire subtrees when nothing is changed and uses old fiber tree in such cases skipping rendering part.There can be cases where there are multiple updates before a single commit. React gives priority to each update and decide which to commit.
 
 [Full Credits to Rodrigo pombo](https://pomb.us/build-your-own-react/)
