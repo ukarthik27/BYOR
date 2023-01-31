@@ -1,6 +1,7 @@
 # Build your own react
 
-An attempt to understand how react works under the hood by breakdown to its basic functionalities and putting them back.
+React-like frontend library supporting reconciliation, virtual dom, functional components and state
+management.
 
 #### Codesandbox: https://fexy87.csb.app/
 ---
